@@ -37,18 +37,25 @@ class DataLoader:
         return res
 
     @staticmethod
-    def get_title(name: str) -> str:
+    def get_title(name):
         pattern = ' ([A-Za-z]+)\.'
         title_search = re.search(pattern, name)
         # If the title exists, extract and return it.
         if title_search:
-            return title_search.group(1)
-        return ""
+            title = title_search.group(1)
+            title_map = {'Rare': 4, 'Miss': 1, 'Mr': 2, 'Mrs': 3, 'Master': 0}
+            return title_map.get(title, 0)  # Return 0 for unknown titles
+        return 0
 
     def load_data(self) -> pd.DataFrame:
+        self.data['FamilySize'] = self.data['SibSp'] + self.data['Parch'] + 1
 
+        # replace value
+        self.data['IsAlone'] = 0
+        self.data.loc[self.data['FamilySize'] == 1, 'IsAlone'] = 1
+
+        # apply regex
         self.data['Title'] = self.data['Name'].apply(self.get_title)
-
         # replace
         self.data['Title'] = self.data['Title'].replace(['Lady', 'Countess', 'Capt', 'Col', 'Don',
                                                          'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'],
@@ -57,16 +64,8 @@ class DataLoader:
         self.data['Title'] = self.data['Title'].replace(['Mlle', 'Ms'], 'Miss')
         # replace
         self.data['Title'] = self.data['Title'].replace('Mme', 'Mrs')
-
-        title_map = {'Rare': 0, 'Miss': 1, 'Mr': 2, 'Mrs': 3, 'Master': 4}
-        self.data['Title'] = self.data['Title'].map(title_map)
-
         # fill nans
         self.data['Title'] = self.data['Title'].fillna(0)
-
-        # drop columns
-        drop_elements = ['PassengerId', 'Name', 'Ticket', 'Cabin', 'SibSp',
-                         'Parch', 'FamilySize']
 
         self.data['Age'] = self.data['Age'].fillna(self.data['Age'].median())
 
@@ -76,7 +75,7 @@ class DataLoader:
 
         self.data['Sex'] = self.data['Sex'].map(sex_mapping)
 
-        embark_mapping = {'S': 0, 'C': 1, 'Q': 2}
+        embark_mapping = {'C': 0, 'Q': 1, 'S': 2}
 
         self.data['Embarked'] = self.data['Embarked'].map(embark_mapping)
 
@@ -89,11 +88,11 @@ class DataLoader:
         return self.data
 
     def train_model(self):
-        X = self.data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title']]
+        X = self.data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title', 'IsAlone']]
         y = self.data['Survived']
         print(X.head())
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.2)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.3)
 
         svc_classifier = SVC(probability=True)
         svc_classifier.fit(X_train, y_train)

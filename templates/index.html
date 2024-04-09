@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Page title{% endblock %}
+
+{% block content %}
+
+<div class="container p-3 my-3 bg-secondary text-white">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, i in messages %}
+                      <div class="alert alert-{{category}}">
+                          {{i}}
+                      </div>
+                  {% endfor %}
+              {% endif %}
+        {% endwith %}
+    </div>
+    <div class="container mt-5">
+        <h2 class="mb-4">Please fill the form to make prediction</h2>
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="pclass">Passenger Class</label>
+                <input type="number" class="form-control" id="pclass" name="pclass" required>
+            </div>
+            <div class="form-group">
+                <label for="sex">Sex</label>
+                <select class="form-control" id="sex" name="sex" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="siblings_spouses">Siblings/Spouses Aboard</label>
+                <input type="number" class="form-control" id="siblings_spouses" name="siblings_spouses" required>
+            </div>
+            <div class="form-group">
+                <label for="parents_children">Parents/Children Aboard</label>
+                <input type="number" class="form-control" id="parents_children" name="parents_children" required>
+            </div>
+            <div class="form-group">
+                <label for="fare">Fare</label>
+                <input type="number" class="form-control" id="fare" name="fare" required>
+            </div>
+            <div class="form-group">
+                <label for="embarked">Embarked</label>
+                <select class="form-control" id="embarked" name="embarked" required>
+                    <option value="C">Cherbourg</option>
+                    <option value="Q">Queenstown</option>
+                    <option value="S">Southampton</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+    </div>
+<br><br><br>
+
+{% endblock %}

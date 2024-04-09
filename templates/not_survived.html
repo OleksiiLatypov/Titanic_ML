@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='images/not_survive.png') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh; /* Ensures the background covers the entire viewport height */
+    }
+</style>
+
+<!-- Optional: You can include a div to contain other content on top of the background image -->
+<div class="container">
+    <!-- Button to redirect to homepage -->
+    <br><br>
+    <center><button class="btn btn-primary" onclick="window.location.href='/';">Go to Homepage</button></center>
+</div>
+
+{% endblock %}
