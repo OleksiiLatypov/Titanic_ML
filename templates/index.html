@@ -4,52 +4,64 @@
 
 {% block content %}
 
-<div class="container p-3 my-3 bg-secondary text-white">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                  {% for category, i in messages %}
-                      <div class="alert alert-{{category}}">
-                          {{i}}
-                      </div>
-                  {% endfor %}
-              {% endif %}
-        {% endwith %}
-    </div>
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='images/onboard.jpg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 120vh; /* Ensures the background covers the entire viewport height */
+    }
+
+    h1 {
+        letter-spacing: 10px; /* Increases spacing by 5 pixels */
+        text-shadow: 5px 5px 5px rgba(5, 5, 5, 0.2);
+     }
+
+
+    .form-control {
+        width: 400px; /* Adjust width as desired */
+        text-align: center;
+    }
+
+
+</style>
+
     <div class="container mt-5">
-        <h2 class="mb-4">Please fill the form to make prediction</h2>
+        <h2 class="mb-4" align="center">Please fill the form to make prediction</h2>
         <form method="POST" action="/predict">
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="pclass">Passenger Class</label>
                 <input type="number" class="form-control" id="pclass" name="pclass" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="sex">Sex</label>
                 <select class="form-control" id="sex" name="sex" required>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="age">Age</label>
                 <input type="number" class="form-control" id="age" name="age" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="siblings_spouses">Siblings/Spouses Aboard</label>
                 <input type="number" class="form-control" id="siblings_spouses" name="siblings_spouses" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="parents_children">Parents/Children Aboard</label>
                 <input type="number" class="form-control" id="parents_children" name="parents_children" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="fare">Fare</label>
                 <input type="number" class="form-control" id="fare" name="fare" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <label for="embarked">Embarked</label>
                 <select class="form-control" id="embarked" name="embarked" required>
                     <option value="C">Cherbourg</option>
@@ -57,9 +69,8 @@
                     <option value="S">Southampton</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Predict</button>
+            <center><button type="submit" class="btn btn-primary" >Predict</button></center>
         </form>
     </div>
-<br><br><br>
 
 {% endblock %}
