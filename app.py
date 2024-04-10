@@ -54,7 +54,7 @@ def predict():
             #flash("No Survived", 'danger')
             return render_template('not_survived.html')
         else:
-            flash("Survived", 'success')
+            return render_template('survive.html')
     return render_template('index.html')
 
 
