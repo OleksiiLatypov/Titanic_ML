@@ -47,17 +47,22 @@ def predict():
         dl = DataLoader(input_data)
         preprocessed_data = dl.load_data()
         print(preprocessed_data)
-        prediction = model.predict(preprocessed_data[['Pclass',	'Sex',	'Age', 'SibSp', 'Parch','Fare',	'Embarked', 'Title', 'IsAlone']])
+        prediction = model.predict(preprocessed_data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked',
+                                                      'Title', 'IsAlone']])
+
+        probability = model.predict_proba(preprocessed_data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked',
+                                                      'Title', 'IsAlone']])[:, 1] * 100
+        print(probability)
         print(prediction)
         # return render_template('index.html', prediction=prediction[0])
         if prediction[0] == 0:
-            #flash("No Survived", 'danger')
-            return render_template('not_survived.html')
+            # flash("No Survived", 'danger')
+            return render_template('not_survived.html', probability=probability[0].round())
         else:
-            return render_template('survive.html')
+            return render_template('survive.html', probability=probability[0].round())
     return render_template('index.html')
 
 
 if __name__ == '__main__':
-    app.secret_key='secret_key'
+    app.secret_key = 'secret_key'
     app.run(debug=True)

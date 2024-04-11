@@ -102,8 +102,10 @@ class DataLoader:
         train_accuracy = accuracy_score(y_train, train_predictions)
         print(train_accuracy)
         predictions = svc_classifier.predict(X_test)
-        rfc_accuracy = accuracy_score(y_test, predictions)
-        print(rfc_accuracy)
+        svc_accuracy = accuracy_score(y_test, predictions)
+        print(svc_accuracy)
+        probabilities = svc_classifier.predict_proba(X_test)[:, 1] * 100
+        print(probabilities)
         return predictions
 
     def save_model(self):
@@ -112,13 +114,14 @@ class DataLoader:
             pickle.dump(self.model, f)
 
 
-df = pd.read_csv(TRAIN_DATA)
+if __name__ == '__main__':
+    df = pd.read_csv(TRAIN_DATA)
+    dp = DataLoader(df)
+    res = dp.load_data()
+    # print(res.head())
+    # display(res)
+    split = dp.train_model()
+    #print(split)
+    dp.save_model()
 
-dp = DataLoader(df)
-res = dp.load_data()
-# print(res.head())
-# display(res)
-split = dp.train_model()
-dp.save_model()
-
-# print(split)
+    # print(split)
