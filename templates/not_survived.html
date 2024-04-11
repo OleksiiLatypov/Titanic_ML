@@ -16,7 +16,12 @@
     h1 {
         letter-spacing: 10px; /* Increases spacing by 5 pixels */
         text-shadow: 5px 5px 5px rgba(255, 255, 255, 0.2);
-     }
+    }
+
+    h2 {
+        letter-spacing: 5px; /* Increases spacing by 15 pixels */
+        text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.25); /* White shadow with 50% transparency */
+    }
 
     button {
         letter-spacing: 3px; /* Increases spacing by 5 pixels */
@@ -26,17 +31,20 @@
 
 
 </style>
-
+<center><h1 style="color: #fff;">Titanic ML project</h1></center>
 <!-- Optional: You can include a div to contain other content on top of the background image -->
 <div class="container">
     <!-- Button to redirect to homepage -->
     <br><br>
-    <h2 align="center"> Percent that you survive: {{ probability }}</h2>
-    <br><br>
     <h1 align="center" style="font-size: 55px; color: #fff;">YOU WOULD NOT SURVIVE</h1>
-
+    <br><br>
+    <h2 align="center" style="color: #fff;"> Probability that you survive: {{ probability }} %</h2>
     <br><br>
     <center><button class="btn btn-primary btn-lg" onclick="window.location.href='/';">GO TO PRREDICTIONS</button></center>
+
+
 </div>
+
+
 
 {% endblock %}
