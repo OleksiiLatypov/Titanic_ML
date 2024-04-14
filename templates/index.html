@@ -10,11 +10,11 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        height: 120vh; /* Ensures the background covers the entire viewport height */
+        height: 125vh; /* Ensures the background covers the entire viewport height */
     }
 
-    h1 {
-        letter-spacing: 10px; /* Increases spacing by 5 pixels */
+    h2 {
+        letter-spacing: 8px; /* Increases spacing by 5 pixels */
         text-shadow: 5px 5px 5px rgba(5, 5, 5, 0.2);
      }
 
@@ -24,54 +24,104 @@
         text-align: center;
     }
 
+    label {
+        font-size: 20px; /* Adjust font size as desired */
+    }
+
+
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.8);;
+        padding: 20px;
+        border-radius: 10px;
+        width: 500px; /* Adjust width as desired */
+        max-width: 90%; /* Set maximum width to maintain responsiveness */
+        margin: 0 auto; /* Center the form container horizontally */
+    }
+
+<!--    .header-form{-->
+<!--        background-color: rgba(255, 255, 255, 0.5);;-->
+<!--        padding: 5px;-->
+<!--        border-radius: 10px;-->
+<!--        width: 800px; /* Adjust width as desired */-->
+<!--        max-width: 90%; /* Set maximum width to maintain responsiveness */-->
+<!--        margin: 0 auto; /* Center the form container horizontally */-->
+<!--    }-->
+
 
 </style>
 
     <div class="container mt-5">
-        <h2 class="mb-4" align="center">Please fill the form to make prediction</h2>
-        <form method="POST" action="/predict">
-            <div class="form-group" align="center">
-                <label for="pclass">Passenger Class</label>
-                <input type="number" class="form-control" id="pclass" placeholder="Enter Your Passenger Class" name="pclass" min="1" max="3" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="sex">Sex</label>
-                <select class="form-control" id="sex" name="sex" required>
-                    <option value="" disabled selected hidden>Choose Your Sex</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-            </div>
-            <div class="form-group" align="center">
-                <label for="age">Age</label>
-                <input type="number" class="form-control" id="age" placeholder="Enter Your Age" name="age" min="0" max="100" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="name">Full Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter Your Full Name" name="name" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="siblings_spouses">Siblings/Spouses Aboard</label>
-                <input type="number" class="form-control" id="siblings_spouses" placeholder="Enter Your Number Of Siblings/Spouses Aboard" name="siblings_spouses" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="parents_children">Parents/Children Aboard</label>
-                <input type="number" class="form-control" id="parents_children" placeholder="Enter Your Number Of Parents/Children Aboard" name="parents_children" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="fare">Fare</label>
-                <input type="number" class="form-control" id="fare" placeholder="Enter Passenger Fare" name="fare" required>
-            </div>
-            <div class="form-group" align="center">
-                <label for="embarked">Embarked</label>
-                <select class="form-control" id="embarked" name="embarked" required>
-                    <option value="C">Cherbourg</option>
-                    <option value="Q">Queenstown</option>
-                    <option value="S">Southampton</option>
-                </select>
-            </div>
-            <center><button type="submit" class="btn btn-primary" >Predict</button></center>
-        </form>
+        <div class="header-form">
+            <h2 class="mb-4" align="center">Please fill the Titanic passenger form to make prediction</h2>
+        </div>
+        <div class="form-container">
+
+            <form method="POST" action="/predict">
+                {{ form.csrf_token }}
+                <div class="form-group" align="center">
+                    {{ form.pclass.label }}
+                    {{ form.pclass(class="form-control", placeholder="Enter Your Passenger Class") }}
+                    {% for error in form.pclass.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.sex.label }}
+                    {{ form.sex(class="form-control") }}
+                    {% for error in form.sex.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.age.label }}
+                    {{ form.age(class="form-control", placeholder="Enter Your Age") }}
+                    {% for error in form.age.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.name.label }}
+                    {{ form.name(class="form-control", placeholder="Enter Your Full Name") }}
+                    {% for error in form.name.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.siblings_spouses.label }}
+                    {{ form.siblings_spouses(class="form-control", placeholder="Enter Your Number Of Siblings/Spouses Aboard") }}
+                    {% for error in form.siblings_spouses.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.parents_children.label }}
+                    {{ form.parents_children(class="form-control", placeholder="Enter Your Number Of Parents/Children Aboard") }}
+                    {% for error in form.parents_children.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.fare.label }}
+                    {{ form.fare(class="form-control", placeholder="Enter Passenger Fare") }}
+                    {% for error in form.fare.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group" align="center">
+                    {{ form.embarked.label }}
+                    {{ form.embarked(class="form-control") }}
+                    {% for error in form.embarked.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-dark" style="margin-right: 10px;">Predict</button>
+                    <button type="reset" class="btn btn-secondary" style="margin-left: 10px;">Reset</button>
+                </center>
+            </form>
+        </div>
+
     </div>
+
 
 {% endblock %}
