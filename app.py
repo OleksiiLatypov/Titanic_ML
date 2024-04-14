@@ -6,6 +6,8 @@ from utils.dataloader import DataLoader
 from settings.constants import MODELS_DIRECTORY
 from sklearn.svm import SVC
 from pathlib import Path
+from forms.form import PassengerForm
+
 
 app = Flask(__name__)
 
@@ -22,6 +24,7 @@ def home():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    form = PassengerForm()
     if request.method == 'POST':
         pclass = int(request.form['pclass'])
         sex = request.form['sex']

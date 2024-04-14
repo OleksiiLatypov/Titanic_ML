@@ -32,34 +32,35 @@
         <form method="POST" action="/predict">
             <div class="form-group" align="center">
                 <label for="pclass">Passenger Class</label>
-                <input type="number" class="form-control" id="pclass" name="pclass" required>
+                <input type="number" class="form-control" id="pclass" placeholder="Enter Your Passenger Class" name="pclass" min="1" max="3" required>
             </div>
             <div class="form-group" align="center">
                 <label for="sex">Sex</label>
                 <select class="form-control" id="sex" name="sex" required>
+                    <option value="" disabled selected hidden>Choose Your Sex</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
             <div class="form-group" align="center">
                 <label for="age">Age</label>
-                <input type="number" class="form-control" id="age" name="age" required>
+                <input type="number" class="form-control" id="age" placeholder="Enter Your Age" name="age" min="0" max="100" required>
             </div>
             <div class="form-group" align="center">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <label for="name">Full Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Your Full Name" name="name" required>
             </div>
             <div class="form-group" align="center">
                 <label for="siblings_spouses">Siblings/Spouses Aboard</label>
-                <input type="number" class="form-control" id="siblings_spouses" name="siblings_spouses" required>
+                <input type="number" class="form-control" id="siblings_spouses" placeholder="Enter Your Number Of Siblings/Spouses Aboard" name="siblings_spouses" required>
             </div>
             <div class="form-group" align="center">
                 <label for="parents_children">Parents/Children Aboard</label>
-                <input type="number" class="form-control" id="parents_children" name="parents_children" required>
+                <input type="number" class="form-control" id="parents_children" placeholder="Enter Your Number Of Parents/Children Aboard" name="parents_children" required>
             </div>
             <div class="form-group" align="center">
                 <label for="fare">Fare</label>
-                <input type="number" class="form-control" id="fare" name="fare" required>
+                <input type="number" class="form-control" id="fare" placeholder="Enter Passenger Fare" name="fare" required>
             </div>
             <div class="form-group" align="center">
                 <label for="embarked">Embarked</label>
