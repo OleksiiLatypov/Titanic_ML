@@ -6,11 +6,8 @@ from utils.dataloader import DataLoader
 from settings.constants import MODELS_DIRECTORY
 from forms.form import PassengerForm
 
-
 app = Flask(__name__)
 
-print('model_directory')
-print(MODELS_DIRECTORY.joinpath('svc_model.pkl'))
 with open(MODELS_DIRECTORY.joinpath('svc_model.pkl'), 'rb') as f:
     model = pickle.load(f)
 
@@ -19,9 +16,6 @@ with open(MODELS_DIRECTORY.joinpath('svc_model.pkl'), 'rb') as f:
 def home():
     form = PassengerForm()
     return render_template('index.html', form=form)
-
-
-
 
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -50,12 +44,10 @@ def predict():
         })
         dl = DataLoader(input_data)
         preprocessed_data = dl.load_data()
-
-        prediction = model.predict(
-            preprocessed_data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title', 'IsAlone']])
-        probability = model.predict_proba(
-            preprocessed_data[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title', 'IsAlone']])[
-                      :, 1] * 100
+        data_to_predict = preprocessed_data[
+            ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title', 'IsAlone']]
+        prediction = model.predict(data_to_predict)
+        probability = model.predict_proba(data_to_predict)[:, 1] * 100
 
         if prediction[0] == 0:
             return render_template('not_survived.html', probability=round(probability[0]))
@@ -67,4 +59,3 @@ def predict():
 if __name__ == '__main__':
     app.secret_key = 'secret_key'
     app.run(debug=True, host='0.0.0.0', port=8000)
-
