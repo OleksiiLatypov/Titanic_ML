@@ -1,15 +1,10 @@
-from flask import Flask, request, render_template, redirect, flash
-import pickle
-import numpy as np
+from flask import Flask, request, render_template
 import pandas as pd
 from utils.dataloader import DataLoader
-from settings.constants import MODELS_DIRECTORY
+from utils.predictor import Predictor
 from forms.form import PassengerForm
 
 app = Flask(__name__)
-
-with open(MODELS_DIRECTORY.joinpath('svc_model.pkl'), 'rb') as f:
-    model = pickle.load(f)
 
 
 @app.route('/')
@@ -46,8 +41,9 @@ def predict():
         preprocessed_data = dl.load_data()
         data_to_predict = preprocessed_data[
             ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked', 'Title', 'IsAlone']]
-        prediction = model.predict(data_to_predict)
-        probability = model.predict_proba(data_to_predict)[:, 1] * 100
+        predictor = Predictor()
+        prediction = predictor.predict(data_to_predict)
+        probability = predictor.loaded_estimator.predict_proba(data_to_predict)[:, 1] * 100
 
         if prediction[0] == 0:
             return render_template('not_survived.html', probability=round(probability[0]))
